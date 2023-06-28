@@ -23,6 +23,39 @@ button{
     width: 100%;
     transition: .5s;
 }
+.right-dir{
+    right: 10px !important;
+    left: unset !important;
+    direction: rtl;
+}
+.right-dir .notif-alert{
+    /* direction: ltr; */
+}
+.right-dir .removed{
+    transform: scale(.7);
+    /* transform: translate(1000px); */
+    animation: remove-alert-right .4s .2s;
+}
+@keyframes remove-alert-right {
+    100%{transform: translate(1000px);}
+}
+.left-dir{
+    right: unset !important;
+    left: 10px !important;
+    direction: ltr;
+}
+.left-dir .notif-alert{
+    direction: rtl;
+}
+.left-dir .removed{
+    transform: scale(.7);
+    /* transform: translate(1000px); */
+    animation: remove-alert-left .4s .2s;
+}
+@keyframes remove-alert-left {
+    100%{transform: translate(-1000px);}
+}
+
 .notif-alert{
     width: 35%;
     max-width: 620px;
@@ -57,14 +90,6 @@ button{
     position: absolute;
     top: 10px;
     right: 10px;
-}
-.removed{
-    transform: scale(.7);
-    /* transform: translate(1000px); */
-    animation: removeAlert .4s .2s;
-}
-@keyframes removeAlert {
-    100%{transform: translate(1000px);}
 }
 /* succes */
 .notif-alert.success .notif-alert-items{

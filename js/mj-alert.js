@@ -5,6 +5,7 @@ async function createAlertBox() {
           alertBox.classList.add('alerts-box')
           document.body.appendChild(alertBox)
      }
+     alertBox.classList.add(mjAlert.defaults.dir == "rtl" ? "right-dir" : mjAlert.defaults.dir == "ltr" ? "left-dir" : "right-dir");
      return alertBox
 }
 
@@ -73,7 +74,7 @@ async function createAlertItem({ type, title, message }) {
      return newAlert
 }
 
-async function mjAlert({ type, title, message, time }) {
+const mjAlert = async ({ type, title, message, time }) => {
      let alertBox = await createAlertBox()
      let alert = await createAlertItem({ type, title, message })
      alertBox.insertAdjacentElement("afterbegin", alert)
@@ -83,9 +84,15 @@ async function mjAlert({ type, title, message, time }) {
      setTimeout(() => {
           removeAlert(alert.id)
      }, time);
-
 }
 
+mjAlert.defaults = {
+     dir: "rtl",
+     position: [5, 10, 0, 0]
+}
+mjAlert.option = ({ dir, position, top , start  }) => {
+     mjAlert.defaults.dir = dir ? dir : mjAlert.defaults.dir;
+}
 async function removeAlert(alertId) {
      let alertBox = await createAlertBox()
      let alert = document.getElementById(alertId)
