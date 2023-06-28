@@ -1,14 +1,21 @@
-async function createAlertBox(){
-     if(!document.querySelector('.alerts-box')){
-          let alertBox=document.createElement('div')
+async function createAlertBox() {
+     let alertBox = document.querySelector('.alerts-box')
+     if (!alertBox) {
+          alertBox = document.createElement('div')
           alertBox.classList.add('alerts-box')
-          document.body.insertAdjacentElement("afterbegin",alertBox)
+          document.body.appendChild(alertBox)
      }
-     let alertBox=document.querySelector('.alerts-box')
      return alertBox
 }
-async function createAlertItem({type,title,message}){
-     let alertItem=`
+
+async function createAlertItem({ type, title, message }) {
+     let newAlert = document.createElement('div')
+     newAlert.classList.add("notif-alert", type, "fade")
+
+     let idAlert = createRandomId()
+     newAlert.id = idAlert
+
+     let alertItem = `
           <div class="notif-alert-items">
                <div class="notif-alert-text">
                     <div class="notif-alert-text-header">
@@ -51,7 +58,7 @@ async function createAlertItem({type,title,message}){
                <div class="notif-alert-time-line">
 
                </div>
-               <button class="notif-alert-close">
+               <button class="notif-alert-close" onclick="removeAlert('${idAlert}')">
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                          <path d="M5.17188 10.8286L10.8287 5.17176" stroke="#CAD4E4" stroke-width="1.5" stroke-linecap="round"
                               stroke-linejoin="round" />
@@ -60,33 +67,38 @@ async function createAlertItem({type,title,message}){
                     </svg>
                </button>
           </div>
-
      `
-     let newAlert=document.createElement('div')
-     newAlert.classList.add("notif-alert",type,"fade")
-     newAlert.innerHTML=alertItem
+     newAlert.innerHTML = alertItem
 
      return newAlert
 }
-async function mjAlert({ type, title, message, time }){
-     let alertBox=await createAlertBox()
-     let alert=await createAlertItem({type,title,message})
-     alert.children[0].children[2].addEventListener('click',()=>removeAlert(alert,alertBox))
-     alertBox.insertAdjacentElement("afterbegin",alert)
+
+async function mjAlert({ type, title, message, time }) {
+     let alertBox = await createAlertBox()
+     let alert = await createAlertItem({ type, title, message })
+     alertBox.insertAdjacentElement("afterbegin", alert)
      setTimeout(() => {
           alert.classList.add('show')
      }, 50);
      setTimeout(() => {
-          removeAlert(alert,alertBox)
+          removeAlert(alert.id)
      }, time);
 
 }
-function removeAlert(alert,alertBox){
+
+async function removeAlert(alertId) {
+     let alertBox = await createAlertBox()
+     let alert = document.getElementById(alertId)
      alert.classList.add('removed')
-      setTimeout(() => {
+     setTimeout(() => {
           alert.remove()
-          if(alertBox.children.length<1){
+          if (alertBox.children.length < 1) {
                alertBox.remove()
           }
      }, 500);
+}
+
+function createRandomId() {
+     let alertId = "alert" + Math.floor(Math.random() * 13 * 1000)
+     return alertId
 }
