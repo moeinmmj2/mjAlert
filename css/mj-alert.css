@@ -1,0 +1,117 @@
+
+:root{
+    --bg-success: #35CB98;
+    --bg-error: #FF6464;
+    --bg-warning: #FFC107;
+    --bg-primery: #61AFFD;
+}
+/* notfi alert */
+.alerts-box{
+    position: fixed;
+    top: 150px;
+    right: 10px;
+    z-index: 10000;
+    width: 100%;
+    transition: .5s;
+}
+.notif-alert{
+    width: 35%;
+    max-width: 620px;
+    margin-bottom: 10px;
+    transition: .5s;
+}
+.notif-alert .notif-alert-items{
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 10px 40px 10px 10px;
+}
+.notif-alert .notif-alert-text-header{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.notif-alert .notif-alert-icon{
+    margin-left: 5px;
+}
+.notif-alert .notif-alert-icon svg{
+    display: none;
+}
+.notif-alert .notif-alert-title{
+    margin: 0;
+}
+.notif-alert .notif-alert-close{
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.removed{
+    transform: scale(.7);
+    /* transform: translate(1000px); */
+    animation: removeAlert .4s .2s;
+}
+@keyframes removeAlert {
+    100%{transform: translate(1000px);}
+}
+/* succes */
+.notif-alert.success .notif-alert-items{
+    border-top: 2px solid var(--bg-success);
+}
+.notif-alert.success .notif-alert-title{
+    color: var(--bg-success);
+}
+.notif-alert.success .notif-alert-icon .icon-success{
+    display: block !important;
+}
+/* error */
+.notif-alert.error .notif-alert-items{
+    border-top: 2px solid var(--bg-error);
+}
+.notif-alert.error .notif-alert-title{
+    color: var(--bg-error);
+}
+.notif-alert.error .notif-alert-icon .icon-error{
+    display: block !important;
+}
+/* warning */
+.notif-alert.warning .notif-alert-items{
+    border-top: 2px solid var(--bg-warning);
+}
+.notif-alert.warning .notif-alert-title{
+    color: var(--bg-warning);
+}
+.notif-alert.warning .notif-alert-icon .icon-warning{
+    display: block !important;
+}
+/* primary */
+.notif-alert.primary .notif-alert-items{
+    border-top: 2px solid var(--bg-primery);
+}
+.notif-alert.primary .notif-alert-title{
+    color: var(--bg-primery);
+}
+.notif-alert.primary .notif-alert-icon .icon-primary{
+    display: block !important;
+}
+body#profile .notif-alert{
+    top: 120px !important;
+}
+
+/* responsive */
+@media only screen and (max-width: 576px) {
+    .alerts-box{
+    top: 80px;
+    }
+    .notif-alert{
+    width: 80% !important;
+    }
+}
+@media only screen and (min-width: 577px) and (max-width: 991px){
+    .notif-alert{
+        width: 60%;
+    }
+}
