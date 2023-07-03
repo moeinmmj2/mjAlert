@@ -2,16 +2,24 @@ async function createAlertBox() {
      let alertBox = document.querySelector('.alerts-box')
      if (!alertBox) {
           alertBox = document.createElement('div')
-          alertBox.classList.add('alerts-box')
           document.body.appendChild(alertBox)
      }
-     alertBox.classList.add(mjAlert.defaults.dir == "rtl" ? "right-dir" : mjAlert.defaults.dir == "ltr" ? "left-dir" : "right-dir");
+
+     alertBox.classList
+          .add(
+               'alerts-box',
+               mjAlert.defaults.dir == "ltr" ? "left-dir" : "right-dir",
+               mjAlert.defaults.position == "bottom" ? "mj-pos-bottom" : "mj-pos-top",
+               "mj-offsetY-" + mjAlert.defaults.offsetY,
+               "mj-offsetX-" + mjAlert.defaults.offsetX,
+          );
+
      return alertBox
 }
-
 async function createAlertItem({ type, title, message }) {
      let newAlert = document.createElement('div')
-     newAlert.classList.add("notif-alert", type, "fade")
+     newAlert.classList
+          .add("notif-alert", type, "fade")
 
      let idAlert = createRandomId()
      newAlert.id = idAlert
@@ -87,11 +95,20 @@ const mjAlert = async ({ type, title, message, time }) => {
 }
 
 mjAlert.defaults = {
-     dir: "rtl",
-     position: [5, 10, 0, 0]
+     dir: "rtl",        /* rtl or ltr */
+     position: "top",  /* top or bottom */
+     offsetY: 100,      /* top margin in position top and bottom margin in position bottom 0% to 200% (25% up) */
+     offsetX: 100,     /* right margin in dir rtl and left margin in dir ltr 0% to 200% (25% up) */
+     defaultX: 10,
 }
-mjAlert.option = ({ dir, position, top , start  }) => {
-     mjAlert.defaults.dir = dir ? dir : mjAlert.defaults.dir;
+mjAlert.option = ({ dir, position, offsetY , offsetX , defaultX  }) => {
+     mjAlert.defaults={
+          dir : dir || mjAlert.defaults.dir,
+          position : position ||  mjAlert.defaults.position,
+          offsetY : offsetY || mjAlert.defaults.offsetY,
+          offsetX : offsetX || mjAlert.defaults.offsetX
+     }
+          
 }
 async function removeAlert(alertId) {
      let alertBox = await createAlertBox()
